@@ -4,7 +4,7 @@ _Updated 19-Mar-2025._
 
 Different from Godot's [Pong example](https://github.com/godotengine/godot-demo-projects/tree/master/2d/pong), this tutorial use its physics engine. You will see the three `PhysicsBody2D` in action, and how `collision_layer` plus `collision_mask` work.
 
-Full source of this project.
+[Full source of this project](https://github.com/hungptsg/mini-projects/tree/main/pong/src).
 
 
 ## Create the project and entry-point
