@@ -1,0 +1,114 @@
+[gd_scene load_steps=10 format=3 uid="uid://cu38xdff5tx00"]
+
+[ext_resource type="Script" path="res://main_1.gd" id="1_edqqj"]
+[ext_resource type="Script" path="res://paddle_p1.gd" id="2_2mtsw"]
+[ext_resource type="Script" path="res://paddle_p2.gd" id="3_osfh4"]
+[ext_resource type="Script" path="res://ball.gd" id="4_tkv28"]
+[ext_resource type="AudioStream" uid="uid://di6qotxsxwi33" path="res://asset/sound.wav" id="5_srody"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g84ta"]
+size = Vector2(60, 200)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_60yex"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ny34p"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vvu3t"]
+size = Vector2(900, 50)
+
+[node name="Main1" type="Node2D"]
+script = ExtResource("1_edqqj")
+
+[node name="Paddle_P1" type="CharacterBody2D" parent="."]
+position = Vector2(50, 300)
+collision_mask = 2
+script = ExtResource("2_2mtsw")
+
+[node name="Polygon2D" type="Polygon2D" parent="Paddle_P1"]
+color = Color(0.207843, 0.862745, 0, 1)
+polygon = PackedVector2Array(-30, -100, 30, -100, 30, 100, -30, 100)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle_P1"]
+shape = SubResource("RectangleShape2D_g84ta")
+
+[node name="Label" type="Label" parent="Paddle_P1"]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Paddle_P2" type="CharacterBody2D" parent="."]
+position = Vector2(850, 300)
+collision_mask = 2
+platform_on_leave = 2
+script = ExtResource("3_osfh4")
+
+[node name="Polygon2D" type="Polygon2D" parent="Paddle_P2"]
+color = Color(0.113725, 0.364706, 0.909804, 1)
+polygon = PackedVector2Array(-30, -100, 30, -100, 30, 100, -30, 100)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle_P2"]
+shape = SubResource("RectangleShape2D_g84ta")
+
+[node name="Ball" type="RigidBody2D" parent="."]
+position = Vector2(450, 300)
+collision_layer = 0
+physics_material_override = SubResource("PhysicsMaterial_60yex")
+max_contacts_reported = 2
+script = ExtResource("4_tkv28")
+
+[node name="Polygon2D" type="Polygon2D" parent="Ball"]
+polygon = PackedVector2Array(-10, -5, -5, -10, 5, -10, 10, -5, 10, 5, 5, 10, -5, 10, -10, 5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+shape = SubResource("CircleShape2D_ny34p")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Ball"]
+stream = ExtResource("5_srody")
+
+[node name="Score_P1" type="Label" parent="."]
+self_modulate = Color(1, 1, 1, 0.6)
+offset_left = 200.0
+offset_right = 400.0
+offset_bottom = 200.0
+size_flags_vertical = 1
+theme_override_colors/font_shadow_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 10
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/outline_size = 15
+theme_override_constants/shadow_outline_size = 5
+theme_override_font_sizes/font_size = 100
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Score_P2" type="Label" parent="."]
+self_modulate = Color(1, 1, 1, 0.6)
+offset_left = 500.0
+offset_right = 700.0
+offset_bottom = 200.0
+size_flags_vertical = 1
+theme_override_colors/font_shadow_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 10
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/outline_size = 15
+theme_override_constants/shadow_outline_size = 5
+theme_override_font_sizes/font_size = 100
+text = "0
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Walls" type="StaticBody2D" parent="."]
+collision_layer = 3
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls"]
+position = Vector2(450, -25)
+shape = SubResource("RectangleShape2D_vvu3t")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Walls"]
+position = Vector2(450, 625)
+shape = SubResource("RectangleShape2D_vvu3t")
