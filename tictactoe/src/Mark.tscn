@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://sdqh3me5jhm"]
+
+[ext_resource type="Texture2D" uid="uid://dxna8he3b0ks2" path="res://asset/mark.png" id="1_rewo6"]
+
+[node name="Mark" type="Sprite2D"]
+scale = Vector2(2, 2)
+texture = ExtResource("1_rewo6")
+centered = false
+hframes = 2

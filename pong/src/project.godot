@@ -21,7 +21,7 @@ window/size/viewport_height=600
 
 [dotnet]
 
-project/assembly_name="Pingpong"
+project/assembly_name="Pong"
 
 [input]
 
