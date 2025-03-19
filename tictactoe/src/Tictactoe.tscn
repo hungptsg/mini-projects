@@ -19,15 +19,9 @@ shape = SubResource("RectangleShape2D_lku85")
 color = Color(0.45268, 0.31212, 0.490806, 1)
 polygon = PackedVector2Array(0, 0, 288, 0, 288, 288, 0, 288)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="Label" type="Label" parent="CanvasLayer"]
+[node name="Label" type="Label" parent="."]
 offset_left = 47.0
 offset_top = 114.0
 offset_right = 232.0
 offset_bottom = 156.0
 label_settings = SubResource("LabelSettings_s5dwm")
-
-[node name="Label" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0

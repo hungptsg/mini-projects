@@ -200,6 +200,8 @@ Since the paddles has to avoid `mask` `1`, have the walls and the paddles "colli
 
 > `StaticBody2D`s do not move at all, so theirs `mask` may be irrelevant.
 
+
+
 ## The end
 
 Thanks for reading.

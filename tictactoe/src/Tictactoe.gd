@@ -3,14 +3,15 @@ extends Area2D
 enum MARKS {
 	X, O
 }
-var mark_scene :PackedScene = load("res://Mark.tscn")
+var mark_scene: PackedScene = load("res://Mark.tscn")
 var data = [null, null, null, null, null, null, null, null, null]
 var tile_size = 96
 
 func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void:
 	if event is InputEventMouseButton:
-		if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-			var coords = local_to_map(get_global_mouse_position())
+		var mouseEvent = event as InputEventMouseButton
+		if mouseEvent.pressed and mouseEvent.button_index == MOUSE_BUTTON_LEFT:
+			var coords = local_to_map(mouseEvent.position)
 			if (data[to_array_index(coords)] == null):
 				# "draw" a mark at the location of the mouse.
 				var new_mark = mark_scene.instantiate() as Sprite2D
@@ -19,13 +20,14 @@ func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void
 				add_child(new_mark)
 				# update inner array
 				data[to_array_index(coords)] = MARKS.X
-				print(data)
-				
-				# bot make move
+				if check_win(MARKS.X):
+					won("player_1")
+					return
+				# opponent moves
 				bot_make_move()
-				
-				# check winner
-				check_winner()
+				if check_win(MARKS.O):
+					won("bot")
+					return
 
 
 func bot_make_move():
@@ -41,21 +43,8 @@ func bot_make_move():
 			return
 
 
-
-func check_winner():
-	if check(MARKS.X):
-		won("player_1")
-		return
-	if check(MARKS.O):
-		won("bot")
-		return
-
-
-func check(mark):
+func check_win(mark):
 	for i in 3:
-		# 0   1   2
-		# 3   4   5
-		# 6   7   8
 		# rows
 		if data[i * 3] == mark and data[i * 3 + 1] == mark and data[i * 3 + 2] == mark:
 			return true
@@ -69,15 +58,18 @@ func check(mark):
 		return true
 	pass
 
-
-
+# a simple mechanism to notify winner.
 func won(player):
-	$CanvasLayer/Label.text = player + " won!"
+	$Label.text = player + " won!"
 	input_pickable = false
 
+# convert from pixel position to map coordinates
+# eg. Vector2(88, 124) -> Vector2i(1, 2)
 func local_to_map(v2: Vector2) -> Vector2i:
 	return Vector2i((v2 / tile_size).floor())
 
+# convert between map coords and array index.
+# eg. Vector2i(1, 1) <-> 4
 func to_coords(idx: int) -> Vector2i:
 	return Vector2i(idx % 3, floori(idx / 3))
 
